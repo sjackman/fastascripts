@@ -1,0 +1,22 @@
+#!/usr/bin/perl
+# Check the syntax of a FASTA file.
+# Written by Shaun Jackman <sjackman@bcgsc.ca>.
+use strict;
+
+my $n = 0;
+while (<>) {
+	$n++;
+	if (/^>/) {
+		my $seq = <> or die;
+	} elsif (/^@/) {
+		my $seq = <> or die;
+		my $header = <> or die;
+		my $qual = <> or die;
+		die unless $header =~ /^+/;
+		die unless length $seq == length $qual;
+	} else {
+		die;
+	}
+}
+
+print "$n\n";

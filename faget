@@ -1,0 +1,60 @@
+#!/usr/bin/perl
+# Select sequences from a FASTA file by identifier.
+# Written by Shaun Jackman <sjackman@bcgsc.ca>.
+
+use strict;
+use Getopt::Std qw'getopts';
+
+my %opt;
+getopts 'f:p:v', \%opt;
+my $opt_f = $opt{'f'};
+my $opt_prefix = $opt{'p'};
+my $opt_invert = $opt{'v'};
+
+# Reverse complement.
+sub rc($)
+{
+	my $seq = $_[0];
+	($seq = reverse $seq) =~ tr/ACGTacgt/TGCAtgca/;
+	return $seq;
+}
+
+my %f;
+sub insert($)
+{
+	my $id = shift;
+	if ($id =~ /[+-]$/) {
+		my $sense = chop $id;
+		$f{$id} = $sense;
+	} else {
+		$f{$id} = 1;
+	}
+}
+
+if (defined $opt_f) {
+	open F, "<$opt_f" or die;
+	chomp, insert $_ while <F>;
+	close F;
+} else {
+	insert $_ for split ',| |\|', shift;
+}
+
+while (<>) {
+	next if /^#/;
+	die unless s/^>//;
+	chomp;
+	my ($id, $comment) = split ' ', $_, 2;
+	chomp (my $seq = <>);
+	if ($opt_invert) {
+		print ">$_\n$seq\n" unless $f{$id};
+	} else {
+		my $sense = $f{$id};
+		$seq = rc $seq if $sense eq '-';
+		next if !$f{$id};
+		if ($sense =~ /[+-]/) {
+			print ">$opt_prefix$id$sense $comment\n$seq\n";
+		} else {
+			print ">$opt_prefix$_\n$seq\n";
+		}
+	}
+}

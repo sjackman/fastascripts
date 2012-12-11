@@ -1,0 +1,30 @@
+#!/usr/bin/perl
+use strict;
+
+my %table = (
+	'A' => ['A', 'C', 'G', 'T'],
+	'C' => ['C', 'A', 'T', 'G'],
+	'G' => ['G', 'T', 'A', 'C'],
+	'T' => ['T', 'G', 'C', 'A']
+);
+
+sub cs_to_base($)
+{
+	my $read = shift;
+	my $seed = substr($read, 0, 1);
+	for (my $i = 1; $i < length $read; $i++) {
+		my $p = \substr($read, $i, 1);
+		$$p = $seed = $table{$seed}[$$p];
+	}
+	return $read;
+}
+
+while (<>) {
+	if (/^[ACGT]/) {
+		chomp;
+		print substr cs_to_base($_), 1;
+		print "\n";
+	} else {
+		print;
+	}
+}

@@ -1,0 +1,9 @@
+#!/usr/bin/perl
+use strict;
+
+while (<>) {
+	my $seq = <>;
+	my $id = substr $_, 1;
+	my $prefix = substr $ARGV, 0, 3;
+	print '>', $prefix, '_', $id, $seq;
+}

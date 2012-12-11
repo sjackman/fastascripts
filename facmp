@@ -1,0 +1,23 @@
+#!/usr/bin/perl
+# Generate a cigar-plot of FASTA sequences.
+# Written by Shaun Jackman <sjackman@bcgsc.ca>.
+
+use strict;
+
+my $a;
+while (<>) {
+	next if /^[>#]/;
+	chomp;
+	if (!defined $a) {
+		$a = $_;
+		next;
+	}
+	my $b = $_;
+
+	# Compare sequence a to sequence b.
+	print $a, "\n";
+	print map { ord == 0 ? '|' : ' ' } split '', $a ^ $b;
+	print "\n";
+	print $b, "\n";
+	undef $a;
+}

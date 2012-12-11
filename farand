@@ -1,0 +1,12 @@
+#!/usr/bin/perl
+use strict;
+
+srand 0;
+
+my $i = 0;
+for my $len (@ARGV) {
+	print ">$i $len\n";
+	print map { qw'A C G T'[rand 4] } 1 .. $len;
+	print "\n";
+	$i++;
+}

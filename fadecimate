@@ -1,0 +1,10 @@
+#!/usr/bin/perl
+use strict;
+# Keep only 1 in every N pairs of reads.
+
+my $p = 1 / shift;
+
+while (<>) {
+	my $x = $_ . <> . <> . <>;
+	print $x if rand() < $p;
+}

@@ -1,0 +1,27 @@
+#!/usr/bin/perl
+# Print the lengths of contigs.
+# Written by Shaun Jackman <sjackman@bcgsc.ca>.
+use strict;
+
+while (<>) {
+	next if /^#/;
+	die unless /^>/;
+	chomp;
+	my ($id, undef) = split ' ', $_, 2;
+
+	my $seq = '';
+	while (<>) {
+		next if /^#/;
+		last if /^>/;
+		chomp;
+		$seq .= $_;
+	}
+
+	#my $len = length $seq;
+	#my $len = $seq =~ tr/ACGT//;
+	my $len = $seq =~ tr/ACGTacgt//;
+	print substr($id, 1), "\t", $len, "\n";
+
+	redo if /^>/;
+	last if eof;
+}

@@ -1,0 +1,108 @@
+#!/usr/bin/perl
+use strict;
+use Getopt::Std qw'getopts';
+
+my %opt;
+getopts 'k:o:', \%opt;
+my $opt_o =
+	exists $opt{'o'} ? -$opt{'o'} :
+	exists $opt{'k'} ? -($opt{'k'} - 1) :
+	undef;
+
+# Reverse complement.
+sub rc($) {
+	my $seq = $_[0];
+	($seq = reverse $seq) =~ tr/ACGTacgt/TGCAtgca/;
+	return $seq;
+}
+
+my $id;
+my %comment;
+my %seq;
+my %multiplicity;
+while (<>) {
+	chomp;
+	next if /^#/ || /^$/;
+
+	if (/^>/) {
+		my $comment;
+		($id, $comment) = split ' ', (substr $_, 1), 2;
+		die if exists $comment{$id};
+		if (defined $comment) {
+			$comment{$id} = " $comment";
+			my (undef, $multiplicity) = split ' ', $comment;
+			$multiplicity{$id} = $multiplicity;
+		}
+
+		next;
+	}
+
+	if (/^[ACGTacgtN]/) {
+		die if exists $seq{$id};
+		$seq{$id} = $_ if !/N/;
+		undef $id;
+		next;
+	}
+
+	last;
+}
+
+my $contig_id = 0;
+my %seen;
+goto first;
+while (<>) {
+first:
+	chomp;
+	next if /^#/ || /^$/;
+
+	my @x = split;
+
+	my $contig_chain = shift @x;
+	die unless $contig_chain =~ /[+-]$/;
+	my $s = chop $contig_chain;
+	die unless exists $seq{$contig_chain};
+	#next if $seen{$contig_chain};
+	$seen{$contig_chain} = 1;
+	my $contig_seq = $seq{$contig_chain};
+	$contig_seq = rc $contig_seq if $s eq '-';
+	my $contig_multiplicity = $multiplicity{$contig_chain};
+	$contig_chain .= $s;
+
+	while (@x > 0) {
+		my $o = defined $opt_o ? $opt_o : shift @x;
+		die unless $o < 0;
+		$o = -$o;
+		my $id = shift @x;
+		die unless $id =~ /[+-]$/;
+		my $s = chop $id;
+		die unless exists $seq{$id};
+		my $seq = $seq{$id};
+		$seq = rc $seq if $s eq '-';
+		$seen{$id} = 1;
+
+		my $l = $contig_seq;
+		my $r = $seq;
+		my $ol = substr $l, -$o, $o, '';
+		my $or = substr $r, 0, $o, '';
+		die "$ol\n$or" unless $ol eq $or;
+		#print "$ida$as\t$idb$bs\t-$o\n";
+		#print ">$ida$as,$idb$bs $o\n$l$ol$r\n";
+		$contig_seq .= $r;
+		$contig_chain .= ",$id$s";
+		$contig_multiplicity += $multiplicity{$id};
+	}
+
+	my $l = length $contig_seq;
+	print ">$contig_id $l $contig_multiplicity $contig_chain\n",
+		"$contig_seq\n";
+	$contig_id++;
+}
+
+exit 0;
+
+for my $id (sort {$a <=> $b} keys %seq) {
+	if (!$seen{$id}) {
+		print ">$contig_id$comment{$id} $id\n$seq{$id}\n";
+		$contig_id++;
+	}
+}

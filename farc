@@ -1,0 +1,12 @@
+#!/usr/bin/perl
+use strict;
+
+while (<>) {
+	if (/^>/) {
+		print;
+		next;
+	}
+	chomp;
+	tr/ACGTMRWSYKVHDBNacgtmrwsykvhdbn/TGCAKYWSRMBDHVNtgcakywsrmbdhvn/;
+	print scalar reverse($_), "\n";
+}

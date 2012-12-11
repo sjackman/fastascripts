@@ -1,0 +1,19 @@
+#!/usr/bin/perl
+use strict;
+use Digest::MD5 qw(md5_hex);
+
+my $id;
+while (<>) {
+	chomp;
+	if (/^>/) {
+		$id = $_;
+		next;
+	}
+	my $seq = $_;
+	my $rc = reverse $seq;
+	$rc =~ tr/ACGT/TGCA/;
+	print md5_hex $seq lt $rc ? $seq : $rc;
+	print "\t$id" if defined $id;
+	print "\n";
+	undef $id;
+}

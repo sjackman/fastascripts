@@ -1,0 +1,35 @@
+#!/usr/bin/perl
+use strict;
+
+my $opt_letters = 0;
+
+while (<>) {
+	next if /^#/;
+	die unless /^>/;
+	chomp;
+	my ($id, $comment) = split ' ', $_, 2;
+
+	my $seq = '';
+	while (<>) {
+		next if /^#/;
+		last if /^>/;
+		chomp;
+		$seq .= $_;
+	}
+
+	#$seq =~ tr/MRWSYKVHDBmrwsykvhdb/AAACCGAAACaaaccgaaac/;
+	#$seq =~ tr/acgtMRWSYKVHDBmrwsykvhdb/ACGTAAACCGAAACAAACCGAAAC/;
+	my @contigs = split /NN*|nn*/, $seq;
+	#my @contigs = split /nn*/, $seq;
+
+	my $i = $opt_letters ? 'A' : '0';
+	for my $contig (@contigs) {
+		print $id;
+		print '_', $i++ if @contigs > 1;
+		print ' ', $comment if length $comment > 0;
+		print "\n", $contig, "\n";
+	}
+
+	redo if /^>/;
+	last if eof;
+}

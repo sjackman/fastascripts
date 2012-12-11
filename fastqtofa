@@ -1,0 +1,12 @@
+#!/usr/bin/perl
+use strict;
+
+while (<>) {
+	my $hdr = $_;
+	my $seq = <>;
+	my $qhdr = <>;
+	my $qual = <>;
+	die unless $hdr =~ /^@/;
+	die unless $qhdr =~ /^+/;
+	print '>', substr($hdr, 1), $seq;
+}

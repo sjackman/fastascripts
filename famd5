@@ -1,0 +1,5 @@
+#!/bin/bash
+set -eu
+for i; do
+	echo `facanon $i |grep -v '^>' |tr a-z A-Z |sort |md5sum |cut -d' ' -f1` $i
+done

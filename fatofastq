@@ -1,0 +1,13 @@
+#!/usr/bin/perl
+use strict;
+
+my $opt_q = 'I';
+
+while (<>) {
+	die unless /^>/;
+	my $id = $_;
+	chomp (my $seq = <>);
+	print '@', substr($id, 1),
+		$seq, "\n+\n",
+		$opt_q x length($seq), "\n";
+}

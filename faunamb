@@ -1,0 +1,21 @@
+#!/usr/bin/perl
+use strict;
+
+my $opt_n = 0;
+my $opt_conserve_case = 0;
+
+while (<>) {
+	if (/^>/) {
+		print;
+		next;
+	}
+
+	if ($opt_n) {
+		tr/MRWSYKVHDBmrwsykvhdb/NNNNNNNNNNnnnnnnnnnn/;
+	} elsif ($opt_conserve_case) {
+		tr/MRWSYKVHDBmrwsykvhdb/AAACCGAAACaaaccgaaac/;
+	} else {
+		tr/MRWSYKVHDBmrwsykvhdb/aaaccgaaacaaaccgaaac/;
+	}
+	print;
+}

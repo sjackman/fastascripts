@@ -1,0 +1,6 @@
+#!/bin/bash
+set -eu
+f="$1"
+shift
+grep --color=auto -B1 -Ff \
+	<(grep -v '^>' $f; grep -v '^>' $f |farc) "$@"

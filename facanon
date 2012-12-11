@@ -1,0 +1,10 @@
+#!/usr/bin/perl
+use strict;
+
+while (<>) {
+	die unless /^>/;
+	my $id = $_;
+	chomp (my $seq = <>);
+	(my $rev = reverse $seq) =~ tr/ACGTacgt/TGCAtgca/;
+	print $id, ($seq cmp $rev) < 0 ? $seq : $rev, "\n";
+}

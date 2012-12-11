@@ -1,0 +1,44 @@
+#!/usr/bin/perl
+# Reformat and optionally remove short contigs from a FASTA file.
+# Written by Shaun Jackman <sjackman@bcgsc.ca>.
+use strict;
+use Getopt::Std qw'getopts';
+
+my %opt;
+getopts 'c:l:L:', \%opt;
+my $opt_columns = defined $opt{'c'} ? $opt{'c'} : 0;
+my $opt_min_length = defined $opt{'l'} ? $opt{'l'} : 0;
+my $opt_max_length = defined $opt{'L'} ? $opt{'L'} : 2000000000;
+
+while (<>) {
+	next if /^#/;
+	die unless /^>/;
+	chomp;
+	#my $header = $_;
+	my ($id, $comment) = split ' ', $_, 2;
+
+	my $seq = '';
+	while (<>) {
+		next if /^#/;
+		last if /^>/;
+		chomp;
+		$seq .= $_;
+	}
+
+	# Skip short sequences.
+	my $len = $seq =~ tr/ACGTacgt//;
+	if ($opt_min_length <= $len && $len < $opt_max_length) {
+		#print $header, "\n";
+		#print $id, ' ', $comment, "\n";
+		print $id, "\n";
+		if ($opt_columns > 0) {
+			print substr($seq, 0, $opt_columns, ''), "\n"
+				while length $seq > 0;
+		} else {
+			print $seq, "\n";
+		}
+	}
+
+	redo if /^>/;
+	last if eof;
+}

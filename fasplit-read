@@ -1,0 +1,12 @@
+#!/usr/bin/perl
+use strict;
+
+while (<>) {
+	die unless /^>/;
+	chomp (my $id = $_);
+	chomp (my $seq = <>);
+	my $l = (length $seq)/2;
+	my $a = $seq;
+	my $b = substr $a, $l, $l, '';
+	print "$id/1\n$a\n$id/2\n$b\n";
+}

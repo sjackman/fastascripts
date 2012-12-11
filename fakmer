@@ -1,0 +1,37 @@
+#!/usr/bin/perl
+use strict;
+use Getopt::Std 'getopts';
+
+my %opt;
+getopts('k:', \%opt);
+my $opt_k = $opt{'k'};
+
+my $id;
+while (<>) {
+	chomp;
+	if (/^>/) {
+		$id = $_;
+		next;
+	}
+	my $l = length;
+	for my $i (0..($l - $opt_k)) {
+		#print '>', $., ':', $i, "\n", substr($_, $i, $opt_k), "\n";
+		#print $id, ':', $i, "\n", substr($_, $i, $opt_k), "\n";
+
+		#my $seq = substr($_, $i, $opt_k);
+		#if ($seq =~ /N/) {
+		#	print STDERR "skipping N\n";
+		#	next;
+		#}
+		#my ($chr, $rest) = split ':', substr $id, 1;
+		#my ($pos, $comment) = split ' ', $rest;
+		#my $kpos = $pos + $i;
+		##my $kid = "$chr:$kpos $comment:$i\n";
+		#my $kid = ">$comment:$i $chr:$kpos\n";
+		#print $kid, $seq, "\n";
+
+		my ($tag, $comment) = split ' ', $id;
+		print $tag, ':', $i, , ' ', $comment, "\n",
+			substr($_, $i, $opt_k), "\n";
+	}
+}

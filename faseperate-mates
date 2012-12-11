@@ -1,0 +1,19 @@
+#!/usr/bin/perl
+use strict;
+
+open A, '>a';
+open B, '>b';
+
+while (<>) {
+	die unless /^@/;
+	my $b = <>;
+	my $c = <>;
+	my $d = <>;
+	if (/\/1$/) {
+		print A $_, $b, $c, $d;
+	} elsif (/\/2$/) {
+		print B $_, $b, $c, $d;
+	} else {
+		die;
+	}
+}

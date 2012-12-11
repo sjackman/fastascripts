@@ -1,0 +1,8 @@
+#!/usr/bin/perl
+use strict;
+
+while (<>) {
+	die unless /^>/;
+	my $seq = <>;
+	print $seq;
+}
