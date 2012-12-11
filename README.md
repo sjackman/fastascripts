@@ -1,0 +1,4 @@
+fastascripts
+============
+
+Manipulate FASTA files
