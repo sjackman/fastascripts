@@ -1,4 +1,7 @@
 #!/bin/bash
+# Search a FASTA file using a regular expression
+# Copyright 2012 Shaun Jackman
+
 set -eu
 f="$1"
 shift

@@ -1,6 +1,6 @@
 #!/usr/bin/perl
-# Select sequences from a FASTA file by identifier.
-# Written by Shaun Jackman <sjackman@bcgsc.ca>.
+# Select sequences from a FASTA file by identifier
+# Copyright 2012 Shaun Jackman
 
 use strict;
 use Getopt::Std qw'getopts';

@@ -1,6 +1,7 @@
 #!/usr/bin/perl
-# Print the lengths of contigs.
-# Written by Shaun Jackman <sjackman@bcgsc.ca>.
+# Print the lengths of sequences
+# Copyright 2012 Shaun Jackman
+
 use strict;
 
 while (<>) {

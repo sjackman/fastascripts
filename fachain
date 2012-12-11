@@ -1,4 +1,7 @@
 #!/usr/bin/perl
+# Merge overlapping sequences
+# Copyright 2012 Shaun Jackman
+
 use strict;
 use Getopt::Std qw'getopts';
 

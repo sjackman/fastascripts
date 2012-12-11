@@ -1,6 +1,7 @@
 #!/usr/bin/perl
-# Reformat and optionally remove short contigs from a FASTA file.
-# Written by Shaun Jackman <sjackman@bcgsc.ca>.
+# Reformat and optionally remove short contigs from a FASTA file
+# Copyright 2012 Shaun Jackman
+
 use strict;
 use Getopt::Std qw'getopts';
 

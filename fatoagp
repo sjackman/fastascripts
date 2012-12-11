@@ -1,7 +1,6 @@
 #!/usr/bin/perl
-# Convert a FASTA file of scaffolds to a FASTA file of contigs and an
-# AGP file.
-# Written by Shaun Jackman <sjackman@bcgsc.ca>.
+# Convert FASTA scaffolds to FASTA contigs and an AGP file
+# Copyright 2012 Shaun Jackman
 
 use strict;
 use Getopt::Std qw'getopts';

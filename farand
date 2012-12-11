@@ -1,4 +1,7 @@
 #!/usr/bin/perl
+# Generate a FASTA file with random sequence
+# Copyright 2012 Shaun Jackman
+
 use strict;
 
 srand 0;

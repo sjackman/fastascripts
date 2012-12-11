@@ -1,4 +1,7 @@
 #!/usr/bin/perl
+# Reverse and complement the sequences
+# Copyright 2012 Shaun Jackman
+
 use strict;
 
 while (<>) {

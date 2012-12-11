@@ -1,4 +1,7 @@
 #!/usr/bin/perl
+# Output the lexicographically smaller of the sequence and its reverse complement
+# Copyright 2012 Shaun Jackman
+
 use strict;
 
 while (<>) {

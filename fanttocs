@@ -1,4 +1,7 @@
 #!/usr/bin/perl
+# Convert nucleotides to colour-space sequence
+# Copyright 2012 Shaun Jackman
+
 use strict;
 
 my %table = (

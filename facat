@@ -1,4 +1,7 @@
 #!/usr/bin/perl
+# Concatenate FASTA files and add a prefix to the identifier
+# Copyright 2012 Shaun Jackman
+
 use strict;
 
 while (<>) {

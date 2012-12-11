@@ -1,6 +1,8 @@
 #!/usr/bin/perl
+# Randomly keep 1 in every N pairs of reads
+# Copyright 2012 Shaun Jackman
+
 use strict;
-# Keep only 1 in every N pairs of reads.
 
 my $p = 1 / shift;
 

@@ -1,6 +1,7 @@
 #!/usr/bin/perl
-# Check the syntax of a FASTA file.
-# Written by Shaun Jackman <sjackman@bcgsc.ca>.
+# Check the syntax of a FASTA file
+# Copyright 2012 Shaun Jackman
+
 use strict;
 
 my $n = 0;

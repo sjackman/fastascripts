@@ -1,4 +1,7 @@
 #!/usr/bin/perl
+# Convert IUPAC-IUB ambiguity codes to ACGT
+# Copyright 2012 Shaun Jackman
+
 use strict;
 
 my $opt_n = 0;

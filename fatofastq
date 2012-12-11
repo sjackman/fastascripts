@@ -1,4 +1,7 @@
 #!/usr/bin/perl
+# Convert a FASTA file to a FASTQ file
+# Copyright 2012 Shaun Jackman
+
 use strict;
 
 my $opt_q = 'I';

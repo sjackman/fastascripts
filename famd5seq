@@ -1,4 +1,7 @@
 #!/usr/bin/perl
+# Calculate a MD5 digest for each sequence
+# Copyright 2012 Shaun Jackman
+
 use strict;
 use Digest::MD5 qw(md5_hex);
 

@@ -1,6 +1,6 @@
 #!/usr/bin/perl
-# Generate a cigar-plot of FASTA sequences.
-# Written by Shaun Jackman <sjackman@bcgsc.ca>.
+# Compare pairs of sequences
+# Copyright 2012 Shaun Jackman
 
 use strict;
 
