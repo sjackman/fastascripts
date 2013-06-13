@@ -1,15 +1,39 @@
 #!/usr/bin/perl
 # Reverse and complement the sequences
-# Copyright 2012 Shaun Jackman
+# Copyright 2013 Shaun Jackman
 
 use strict;
+use Getopt::Std qw'getopts';
+
+my %opt;
+getopts 'f:r:', \%opt;
+my $opt_f = $opt{'f'};
+my $opt_r = defined $opt{'r'} ? $opt{'r'} : '';
 
 while (<>) {
-	if (/^>/) {
-		print;
-		next;
-	}
+	next if /^#/;
+	die unless /^>/;
 	chomp;
-	tr/ACGTMRWSYKVHDBNacgtmrwsykvhdbn/TGCAKYWSRMBDHVNtgcakywsrmbdhvn/;
-	print scalar reverse($_), "\n";
+	my ($id, $comment) = split ' ', $_, 2;
+
+	my $seq = '';
+	while (<>) {
+		next if /^#/;
+		last if /^>/;
+		chomp;
+		$seq .= $_;
+	}
+
+	if (defined $opt_f) {
+		print $id, $opt_f, "\n", $seq, "\n";
+	}
+
+	if (defined $opt_r) {
+		$seq = reverse($seq);
+		$seq =~ tr/ACGTMRWSYKVHDBNacgtmrwsykvhdbn/TGCAKYWSRMBDHVNtgcakywsrmbdhvn/;
+		print $id, $opt_r, "\n", $seq, "\n";
+	}
+
+	redo if /^>/;
+	last if eof;
 }
